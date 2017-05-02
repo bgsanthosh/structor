@@ -137,9 +137,9 @@ public class GenTable extends Configured implements Tool {
         FSDataOutputStream out = fs.create(in);
         for(int i = 1; i <= parallel; i++) {
           if(table.equals("all")) {
-            out.writeBytes(String.format("./dsdgen -dir $DIR -force Y -scale %d -parallel %d -child %d -rngseed 12345\n", scale, parallel, i));
+            out.writeBytes(String.format("./dsdgen -dir $DIR -force Y -scale %d -parallel %d -child %d \n", scale, parallel, i));
           } else {
-            out.writeBytes(String.format("./dsdgen -dir $DIR -table %s -force Y -scale %d -parallel %d -child %d -rngseed 12345\n", table, scale, parallel, i));
+            out.writeBytes(String.format("./dsdgen -dir $DIR -table %s -force Y -scale %d -parallel %d -child %d \n", table, scale, parallel, i));
           }
         }
         out.close();
