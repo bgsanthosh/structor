@@ -386,11 +386,11 @@ create table web_site
 stored as ${FILE}
 as select * from ${SOURCE}.web_site;
 
-!echo FINISH EXECUTE etl tpcds.realschema convert;
-!date +%s.%N;
+!sh echo FINISH EXECUTE etl tpcds.realschema convert;
+!sh date +%s.%N;
 
-!echo START EXECUTE etl tpcds.realschema stats;
-!date +%s.%N;
+!sh echo START EXECUTE etl tpcds.realschema stats;
+!sh date +%s.%N;
 
 analyze table call_center compute statistics for columns;
 analyze table catalog_page compute statistics for columns;
@@ -417,5 +417,5 @@ analyze table web_returns compute statistics for columns;
 analyze table web_sales compute statistics for columns;
 analyze table web_site compute statistics for columns;
 
-!echo FINISH EXECUTE etl tpcds.realschema stats;
-!date +%s.%N;
+!sh echo FINISH EXECUTE etl tpcds.realschema stats;
+!sh date +%s.%N;
