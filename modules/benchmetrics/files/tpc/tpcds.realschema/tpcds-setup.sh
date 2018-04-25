@@ -19,6 +19,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+source `pwd`/tpcds.properties
 # Get the parameters.
 SCALE=$1
 DIR=$2
@@ -52,10 +53,10 @@ fi
 
 DATABASE=tpcds_real_bin_partitioned_${FORMAT}_${SCALE}
 echo "Optimizing tables and computing stats"
-COMMAND="hive -i settings/etlsettings.sql -f ddl/bin_partitioned/alltables.sql \
-    -d DB=tpcds_real_bin_partitioned_${FORMAT}_${SCALE} \
-    -d SOURCE=tpcds_real_text_${SCALE} -d BUCKETS=${BUCKETS} \
-    -d RETURN_BUCKETS=${RETURN_BUCKETS} -d FILE=${FORMAT}"
+COMMAND="$HIVE -i settings/etlsettings.sql -f ddl/bin_partitioned/alltables.sql \
+    --hivevar DB=tpcds_real_bin_partitioned_${FORMAT}_${SCALE} \
+    --hivevar SOURCE=tpcds_real_text_${SCALE} --hivevar BUCKETS=${BUCKETS} \
+    --hivevar RETURN_BUCKETS=${RETURN_BUCKETS} --hivevar FILE=${FORMAT}"
 runcommand "$COMMAND"
 if [ $? -ne 0 ]; then
 	exit 1

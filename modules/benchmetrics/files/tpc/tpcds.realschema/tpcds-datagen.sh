@@ -19,6 +19,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+source `pwd`/tpcds.properties
 # Get the parameters.
 SCALE=$1
 DIR=$2
@@ -61,4 +62,4 @@ echo "TPC-DS text data generation complete."
 
 # Create the text/flat tables as external tables. These will be later be converted to ORCFile.
 echo "Loading text data into external tables."
-runcommand "hive -i settings/etlsettings.sql -f ddl/text/alltables.sql -d DB=tpcds_real_text_${SCALE} -d LOCATION=${DIR}/${SCALE}"
+runcommand "$HIVE -i settings/etlsettings.sql -f ddl/text/alltables.sql --hivevar DB=tpcds_real_text_${SCALE} --hivevar LOCATION=${DIR}/${SCALE}"
