@@ -1,8 +1,8 @@
 create database if not exists ${DB};
 use ${DB};
 
-!sh echo START EXECUTE etl tpcds.realschema convert;
-!sh date +%s.%N;
+!echo START EXECUTE etl tpcds.realschema convert;
+!date +%s.%N;
 
 drop table if exists call_center;
 create table call_center
@@ -47,7 +47,7 @@ create table catalog_returns
 partitioned by (cr_returned_date_sk int)
 stored as ${FILE};
 
-insert overwrite table catalog_returns partition (cr_returned_date_sk)
+insert overwrite table catalog_returns partition (cr_returned_date_sk) 
 select
     cr.cr_returned_time_sk, cr.cr_item_sk, cr.cr_refunded_customer_sk,
     cr.cr_refunded_cdemo_sk, cr.cr_refunded_hdemo_sk, cr.cr_refunded_addr_sk,
@@ -100,7 +100,7 @@ create table catalog_sales
 partitioned by (cs_sold_date_sk int)
 stored as ${FILE};
 
-insert overwrite table catalog_sales partition (cs_sold_date_sk)
+insert overwrite table catalog_sales partition (cs_sold_date_sk) 
 select
     cs.cs_sold_time_sk, cs.cs_ship_date_sk, cs.cs_bill_customer_sk,
     cs.cs_bill_cdemo_sk, cs.cs_bill_hdemo_sk, cs.cs_bill_addr_sk,
@@ -216,7 +216,7 @@ create table store_returns
 partitioned by (sr_returned_date_sk int)
 stored as ${FILE};
 
-insert overwrite table store_returns partition (sr_returned_date_sk)
+insert overwrite table store_returns partition (sr_returned_date_sk) 
 select
     sr.sr_return_time_sk, sr.sr_item_sk, sr.sr_customer_sk,
     sr.sr_cdemo_sk, sr.sr_hdemo_sk, sr.sr_addr_sk,
@@ -256,7 +256,7 @@ create table store_sales
 partitioned by (ss_sold_date_sk int)
 stored as ${FILE};
 
-insert overwrite table store_sales partition (ss_sold_date_sk)
+insert overwrite table store_sales partition (ss_sold_date_sk) 
 select
     ss.ss_sold_time_sk, ss.ss_item_sk, ss.ss_customer_sk,
     ss.ss_cdemo_sk, ss.ss_hdemo_sk, ss.ss_addr_sk,
@@ -365,7 +365,7 @@ create table web_sales
 partitioned by (ws_sold_date_sk int)
 stored as ${FILE};
 
-insert overwrite table web_sales partition (ws_sold_date_sk)
+insert overwrite table web_sales partition (ws_sold_date_sk) 
 select
     ws.ws_sold_time_sk, ws.ws_ship_date_sk, ws.ws_item_sk,
     ws.ws_bill_customer_sk, ws.ws_bill_cdemo_sk, ws.ws_bill_hdemo_sk,
@@ -386,11 +386,11 @@ create table web_site
 stored as ${FILE}
 as select * from ${SOURCE}.web_site;
 
-!sh echo FINISH EXECUTE etl tpcds.realschema convert;
-!sh date +%s.%N;
+!echo FINISH EXECUTE etl tpcds.realschema convert;
+!date +%s.%N;
 
-!sh echo START EXECUTE etl tpcds.realschema stats;
-!sh date +%s.%N;
+!echo START EXECUTE etl tpcds.realschema stats;
+!date +%s.%N;
 
 analyze table call_center compute statistics for columns;
 analyze table catalog_page compute statistics for columns;
@@ -417,5 +417,5 @@ analyze table web_returns compute statistics for columns;
 analyze table web_sales compute statistics for columns;
 analyze table web_site compute statistics for columns;
 
-!sh echo FINISH EXECUTE etl tpcds.realschema stats;
-!sh date +%s.%N;
+!echo FINISH EXECUTE etl tpcds.realschema stats;
+!date +%s.%N;
